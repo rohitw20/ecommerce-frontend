@@ -13,8 +13,6 @@ import {
   REGISTER_SUCCESS,
 } from "./ActionType";
 
-const token = localStorage.getItem("jwt");
-
 const registerRequest = () => ({ type: REGISTER_REQUEST });
 const registerSuccess = (user) => ({ type: REGISTER_SUCCESS, payload: user });
 const registerFailure = (error) => ({ type: REGISTER_FAILURE, payload: error });
@@ -56,12 +54,12 @@ export const login = (userData) => async (dispatch) => {
   }
 };
 
-export const getUser = () => async (dispatch) => {
+export const getUser = (jwt) => async (dispatch) => {
   try {
     dispatch(getUserRequest());
     const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${jwt}`,
       },
     });
     const user = response.data;
@@ -73,4 +71,5 @@ export const getUser = () => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT, payload: null });
+  localStorage.clear();
 };
