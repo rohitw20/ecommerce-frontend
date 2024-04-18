@@ -20,7 +20,7 @@ const RegisterForm = () => {
         userData
       );
 
-      console.log(response.data);
+      console.log("this is data", response.data);
     } catch (error) {
       console.log("something went wrong");
     }
