@@ -1,8 +1,11 @@
 import { Button, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -55,6 +58,7 @@ const RegisterForm = () => {
               id="email"
               name="email"
               label="Email"
+              type="email"
               fullWidth
               autoComplete="email"
             />
@@ -67,6 +71,7 @@ const RegisterForm = () => {
               label="Password"
               fullWidth
               autoComplete="password"
+              type="password"
             />
           </Grid>
           <Grid item xs={12}>
@@ -88,6 +93,20 @@ const RegisterForm = () => {
           </Grid>
         </Grid>
       </form>
+
+      <div className="flex justify-center  ">
+        <div className="flex py-3 items-center">
+          <p className="">Already have an account?</p>
+          <Button
+            onClick={() => navigate("/login")}
+            className="ml-5 "
+            size="small"
+            sx={{ color: "#9155fd" }}
+          >
+            Log in
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
