@@ -1,10 +1,23 @@
 import { Button, Grid, TextField } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUser, login } from "../../State/Auth/Action";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+
+  const { auth } = useSelector((store) => store);
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt, auth.jwt]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -14,16 +27,7 @@ const LoginForm = () => {
       password: data.get("password"),
     };
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        userData
-      );
-
-      console.log("this is data", response.data);
-    } catch (error) {
-      console.log("something went wrong");
-    }
+    dispatch(login(userData));
   };
   return (
     <div>
