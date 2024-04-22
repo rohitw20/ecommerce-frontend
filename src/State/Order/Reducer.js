@@ -31,6 +31,6 @@ export const orderReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: action.payload };
 
     default:
-      break;
+      return state;
   }
 };
