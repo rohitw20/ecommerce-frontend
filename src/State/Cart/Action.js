@@ -17,7 +17,7 @@ import {
 export const addItemToCart = (reqData) => async (dispatch) => {
   dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
   try {
-    const { data } = await api.put("/api/cart/add", reqData.data);
+    const { data } = await api.post("/api/cart/add", reqData);
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: ADD_ITEM_TO_CART_FAILURE, payload: error.message });
