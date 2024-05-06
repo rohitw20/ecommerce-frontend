@@ -1,21 +1,47 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
+import { useDispatch } from "react-redux";
+import { createOrder } from "../../../State/Order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const address = {
+    firstName: "Rohit",
+    lastName: "Waghole",
+    streetAddress: "Gokhalenagar",
+    city: "Pune",
+    state: "Maharashtra",
+    zipCode: 411016,
+    mobile: 7896541230,
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
     const address = {
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      address: data.get("address"),
+      firstName: data.get("firstname"),
+      lastName: data.get("lastname"),
+      streetAddress: data.get("address"),
       city: data.get("city"),
       state: data.get("state"),
       zipCode: data.get("zip"),
       mobile: data.get("phoneNumber"),
     };
+
+    const orderData = { address, navigate };
+
+    dispatch(createOrder(orderData));
+  };
+
+  const handleDeliver = () => {
+    const orderData = { address, navigate };
+
+    dispatch(createOrder(orderData));
   };
   return (
     <div>
@@ -26,8 +52,9 @@ const DeliveryAddressForm = () => {
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
           <div className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard />
+            <AddressCard address={address} />
             <Button
+              onClick={handleDeliver}
               sx={{
                 mt: 2,
                 bgcolor: "RGB(145, 85, 253)",
@@ -52,7 +79,7 @@ const DeliveryAddressForm = () => {
                     name="firstname"
                     label="First Name"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete="given-fname"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -62,7 +89,7 @@ const DeliveryAddressForm = () => {
                     name="lastname"
                     label="Last Name"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete="given-lname"
                   />
                 </Grid>
                 <Grid item xs={12}>
