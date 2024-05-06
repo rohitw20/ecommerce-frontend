@@ -23,10 +23,9 @@ export const findProducts = (reqData) => async (dispatch) => {
     pageSize,
   } = reqData;
   try {
-    console.log(reqData);
     let apiString = `/api/products?category=${category}`;
-    if (colors.length !== 0) apiString += `&&colors=${colors}`;
-    if (sizes) apiString += `&&sizes=${sizes}`;
+    if (colors.length !== 0) apiString += `&&color=${colors}`;
+    if (sizes.length !== 0) apiString += `&&sizes=${sizes}`;
     if (minPrice) apiString += `&&minPrice=${minPrice}`;
     if (maxPrice) apiString += `&&maxPrice=${maxPrice}`;
     if (minDiscount) apiString += `&&minDiscount=${minDiscount}`;
@@ -35,7 +34,9 @@ export const findProducts = (reqData) => async (dispatch) => {
     if (pageNumber) apiString += `&&pageNumber=${pageNumber}`;
     if (pageSize) apiString += `&&pageSize=${pageSize}`;
     const { data } = await api.get(apiString);
-    console.log(data);
+
+    // console.log("this is data", data);
+
     dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FIND_PRODUCTS_FAILURE, payload: error.message });

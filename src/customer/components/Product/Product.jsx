@@ -20,8 +20,9 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { findProducts } from "../../../State/Product/Action";
+import Pagination from "@mui/material/Pagination";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -39,6 +40,7 @@ export default function Product() {
   const navigate = useNavigate();
   const param = useParams();
   const dispatch = useDispatch();
+  const { product } = useSelector((store) => store);
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParams = new URLSearchParams(decodedQueryString);
@@ -60,9 +62,9 @@ export default function Product() {
       minPrice,
       maxPrice,
       minDiscount: discount || 0,
-      sort: sortValue || "price_low",
+      sort: sortValue || "",
       pageNumber: pageNumber - 1,
-      pageSize: 10,
+      pageSize: 0,
       stock: stockValue,
     };
 
@@ -104,6 +106,13 @@ export default function Product() {
     const searchParams = new URLSearchParams(location.search);
 
     searchParams.set(sectionId, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+
+  const handlePaginationChange = (event, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page", value);
     const query = searchParams.toString();
     navigate({ search: `?${query}` });
   };
@@ -430,11 +439,23 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {mens_kurta.map((item, index) => (
-                    <ProductCard key={index} product={item} />
-                  ))}
+                  {/* {mens_kurta.map((item, index) => ( */}
+                  {product.products &&
+                    product.products?.content?.map((item, index) => (
+                      <ProductCard key={index} product={item} />
+                    ))}
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section className="w-full px-[3.6rem]">
+            <div className="px-4 py-5 flex justify-center">
+              <Pagination
+                count={product.products?.totalPages}
+                color="secondary"
+                onChange={handlePaginationChange}
+              />
             </div>
           </section>
         </main>

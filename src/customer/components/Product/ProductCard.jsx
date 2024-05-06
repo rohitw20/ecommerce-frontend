@@ -24,10 +24,10 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className="flex items-center space-x-2">
-          <p className="font-semibold">₹{product.price}</p>
-          <p className="line-through opacity-50">₹{product.discountedPrice}</p>
+          <p className="font-semibold">₹{product.discountedPrice}</p>
+          <p className="line-through opacity-50">₹{product.price}</p>
           <p className="text-green-600 font-semibold">
-            {product.discountPersent}% OFF
+            {product.discountPresent}% OFF
           </p>
         </div>
       </div>
