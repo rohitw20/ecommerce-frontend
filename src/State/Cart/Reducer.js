@@ -51,7 +51,7 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
+        removeCartItems: action.payload,
       };
     case REMOVE_CART_ITEM_FAILURE:
       return { ...state, loading: false, error: action.payload };
@@ -61,9 +61,7 @@ export const cartReducer = (state = initialState, action) => {
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item.id === action.payload.id ? action.payload : item
-        ),
+        updateCartItems: action.payload,
         loading: false,
       };
     case UPDATE_CART_ITEM_FAILURE:

@@ -76,7 +76,7 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     const data = { productId: params.productId, size: selectedSize.name };
     dispatch(addItemToCart(data));
-    navigate("/cart");
+    // navigate("/cart");
   };
 
   useEffect(() => {
