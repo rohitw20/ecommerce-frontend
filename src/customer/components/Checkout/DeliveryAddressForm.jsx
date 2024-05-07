@@ -45,6 +45,7 @@ const DeliveryAddressForm = () => {
   };
   return (
     <div>
+      {/* <Grid container> */}
       <Grid container spacing={4}>
         <Grid
           xs={12}
@@ -68,7 +69,8 @@ const DeliveryAddressForm = () => {
           </div>
         </Grid>
 
-        <Grid item xs={12} lg={7}>
+        {/* <Grid item xs={12} lg={7}> */}
+        <Grid item>
           <Box className="border rounded-s-md shadow-md p-5">
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
